@@ -2,7 +2,7 @@
     "name": "wycto/helper",
     "description": "php helper class",
     "type": "library",
-    "license": "MIT License",
+    "license": "MIT",
     "authors": [
         {
             "name": "weiyi",
