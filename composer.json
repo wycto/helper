@@ -2,13 +2,17 @@
     "name": "wycto/helper",
     "description": "php helper class",
     "type": "library",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "weiyi",
             "email": "294287600@qq.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "think\\helper\\": "src"
+        }
+    }
 }
