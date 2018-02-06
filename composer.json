@@ -1,0 +1,14 @@
+{
+    "name": "wycto/helper",
+    "description": "php helper class",
+    "type": "library",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "weiyi",
+            "email": "294287600@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
