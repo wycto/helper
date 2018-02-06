@@ -9,10 +9,5 @@
             "email": "294287600@qq.com"
         }
     ],
-    "require": {},
-    "autoload": {
-        "psr-4": {
-            "wycto\\helper\\": "src"
-        }
-    }
+    "require": {}
 }
