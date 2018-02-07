@@ -1,6 +1,6 @@
 {
     "name": "wycto/helper",
-    "description": "php helper class",
+    "description": "php helper class(php助手类库集，里面包含了大量的静态方法，静态调用)",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
