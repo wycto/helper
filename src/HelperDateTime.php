@@ -59,4 +59,54 @@ class HelperDateTime
         $day = $day/86400;
         return $day;
     }
+
+    /**
+     * 时间差计算
+     * @param int $timestamp
+     * @return string
+     */
+    static function round_time($timestamp) {
+
+        $now = CURRENT_TIMESTAMP;
+        $time = $timestamp - $now;
+
+        if ($time > 0) {
+            $suffix = '之后';
+        }
+        else {
+            $suffix = '之前';
+        }
+
+        $time = abs($time);
+        if ($time < 60) {
+            $fix_time = '秒';
+            $round_time = $time;
+        }
+        elseif ($time < 3600) {
+            $fix_time = '分钟';
+            $round_time = round($time / 60);
+        }
+        elseif ($time < 3600 * 24) {
+            $fix_time = '小时';
+            $round_time = round($time / 3600);
+        }
+        elseif ($time < 3600 * 24 * 7) {
+            $fix_time = '天';
+            $round_time = round($time / (3600 * 24));
+        }
+        elseif ($time < 3600 * 24 * 30) {
+            $fix_time = '周';
+            $round_time = round($time / (3600 * 24 * 7));
+        }
+        elseif ($time < 3600 * 24 * 365) {
+            $fix_time = '月';
+            $round_time = round($time / (3600 * 24 * 30));
+        }
+        elseif ($time >= 3600 * 24 * 365) {
+            $fix_time = '年';
+            $round_time = round($time / (3600 * 24 * 365));
+        }
+
+        return $round_time . ' ' . $fix_time . $suffix;
+    }
 }

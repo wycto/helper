@@ -273,4 +273,204 @@ class HelperArray
 
     	return implode ( $glue, $arr );
     }
+
+    /**
+     * 根据字段分组
+     * @param  string $arr       处理的数组
+     * @param  string $key_field 分组的字段
+     * @return array            返回的数组
+     */
+    static function groupBy($arr, $key_field) {
+
+        $ret = array ();
+        foreach ( $arr as $row ) {
+            $key = $row [$key_field];
+            $ret [$key] [] = $row;
+        }
+        return $ret;
+    }
+
+    /**
+     * 将树转换为数组
+     * @param  tree $tree          一棵树
+     * @param  string $key_childrens 孩子的名称
+     * @return array                返回的结果数组
+     */
+    static function treeToArray($tree, $key_childrens = 'childrens') {
+
+        $ret = array ();
+        if (isset ( $tree [$key_childrens] ) && is_array ( $tree [$key_childrens] )) {
+            $childrens = $tree [$key_childrens];
+            unset ( $tree [$key_childrens] );
+            $ret [] = $tree;
+            foreach ( $childrens as $node ) {
+                $ret = array_merge ( $ret, self::treeToArray ( $node, $key_childrens ) );
+            }
+        } else {
+            unset ( $tree [$key_childrens] );
+            $ret [] = $tree;
+        }
+        return $ret;
+    }
+
+    /**
+     * 根据指定的键对数组进行排序
+     * @param  array $array   要排序的数组
+     * @param  string $keyname 要排序的键值
+     * @param  sort $dir     升序还是降序
+     * @return array          返回的数组
+     */
+    static function sortByCol($array, $keyname, $dir = SORT_ASC) {
+
+        return self::sortByMultiCols ( $array, array (
+                $keyname => $dir
+        ) );
+    }
+
+    /**
+     * 获得无限分类的所有孩子
+     * @param  array  $array     原数据
+     * @param  integer $parent_id 分类的父级键
+     * @return array             结果
+     */
+    static function getChildren($array, $parent_id = 0) {
+
+        $ret = array ();
+
+        foreach ( $array as $k => $v ) {
+            if ($v ['parent_id'] == $parent_id) {
+                $ret [$k] = $v;
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * 获得无限分类的所有同辈兄弟姐妹
+     *
+     * @return array
+     */
+    static function getSiblings($array, $self) {
+
+        $ret = array ();
+        $current = $array [$self];
+        if (empty ( $current )) {
+            return $ret;
+        }
+
+        $parent_id = $current ['parent_id'];
+
+        foreach ( $array as $key => $value ) {
+            if ($value ['parent_id'] == $parent_id && $value ['id'] != $self) {
+                $ret [$key] = $value;
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * 获取后代的id 返回id的数组
+     * @param unknown $tree
+     * @param string $key_node_id
+     * @param string $key_childrens
+     * @param string $self
+     */
+    static function getDescendants($tree, $key_node_id = 'id', $key_childrens = 'children', $self = false) {
+
+        //加入传入对象也可以
+        if (empty ( $tree ) || ! (is_array ( $tree )||is_object ( $tree ))) {
+            return;
+        }
+
+        $array = array ();
+        foreach ( $tree [$key_childrens] as $val ) {
+            $array [] = $val [$key_node_id];
+            if ($val [$key_childrens]) {
+                $array = array_merge ( $array, self::getDescendants ( $val, $key_node_id, $key_childrens ) );
+            }
+        }
+        if ($self) {
+            array_unshift($array, $tree[$key_node_id]);
+        }
+        return $array;
+    }
+
+    /**
+     * 将数组转换成SQL语句
+     *
+     * @return string
+     */
+    static function toSQL($array, $key = 0) {
+
+        if (! count ( $array )) {
+            return false;
+        }
+        $sql = $comma = '';
+
+        foreach ( $array as $k => $v ) {
+            $sql .= $comma . "'" . ($key ? $k : $v) . "'";
+            $comma = ',';
+        }
+
+        return $sql;
+    }
+
+    /**
+     * 从二维数组中查找结果
+     *
+     * @param $ref 按某个字段来查找
+     * @param $value 查找的值，即$ref字段的值，如果不存在$ref，即二维数组的键就是记录的ID
+     * @param $return 要返回的字段
+     */
+    static function find(&$array, $ref = null, $value = 'id', $return = null, $single = false) {
+
+        $found = null;
+        if ($ref) {
+            if (! is_array ( $value )) {
+                $value = self::toArray ( $value );
+            }
+            foreach ( $array as $key => $val ) {
+                if (in_array ( $val [$ref], $value )) {
+                    if ($single) {
+                        $found = $return ? $val [$return] : $val;
+                        break;
+                    }
+                    $found [$key] = $return ? $val [$return] : $val;
+                }
+            }
+        } else {
+            if (is_array ( $value )) {
+                foreach ( $value as $val ) {
+                    $found [] = $return ? $array [$val] [$return] : $array [$val];
+                }
+            } else {
+                $found = $return ? $array [$val] [$return] : $array [$val];
+            }
+        }
+        return $found;
+    }
+
+    /**
+     * 替换数组中的某个值
+     */
+    static function replace(&$array, $arr) {
+
+        $return = $array;
+        foreach ( $arr as $key => $val ) {
+            if (isset ( $return [$key] )) {
+                $return [$key] = $val;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * 将数组中的每个元素的头或尾填充字符串
+     */
+    static function fill(& $array, $string, $pos = 'left') {
+
+        foreach ( $array as $k => $v ) {
+            $array [$k] = $pos == 'left' ? "*." . $v : $v . "*.";
+        }
+    }
 }
