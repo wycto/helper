@@ -99,7 +99,7 @@ class HelperDateTime
             $round_time = round($time / (3600 * 24 * 7));
         }
         elseif ($time < 3600 * 24 * 365) {
-            $fix_time = '月';
+            $fix_time = '个月';
             $round_time = round($time / (3600 * 24 * 30));
         }
         elseif ($time >= 3600 * 24 * 365) {
