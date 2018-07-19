@@ -15,5 +15,7 @@ HelperString：字符串类
 
 HelperValidate：验证器类
 
+HelperSpell：汉字转拼音类
+
 使用方法：HelperCommon::getip();
 静态调用
