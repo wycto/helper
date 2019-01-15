@@ -1,5 +1,24 @@
-# php助手函数类库集
+## PHP助手函数类库集
 
+### 安装
+
+~~~
+composer require wycto/helper
+~~~
+
+### 使用方法
+
+~~~
+//静态调用，获取IP
+HelperCommon::getip();
+
+//静态调用，移除空值
+$args = array_merge($this->_request->get(), $this->_request->post());
+HelperArray::removeEmpty($args);
+~~~
+
+#### 类库列表，持续更新
+~~~
 HelperCommon 通用类
 
 
@@ -16,6 +35,4 @@ HelperString：字符串类
 HelperValidate：验证器类
 
 HelperSpell：汉字转拼音类
-
-使用方法：HelperCommon::getip();
-静态调用
+~~~
