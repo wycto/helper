@@ -22,7 +22,7 @@ HelperArray::removeEmpty($args);
 HelperCommon 通用类
 
 
-HelperApi API；类
+HelperApi: API类
 
 HelperArray：数组类
 
@@ -30,9 +30,9 @@ HelperDateTime：日期类
 
 HelperImg：图片类
 
+HelperSpell：拼音类（汉字转拼英）
+
 HelperString：字符串类
 
 HelperValidate：验证器类
-
-HelperSpell：汉字转拼音类
 ~~~
