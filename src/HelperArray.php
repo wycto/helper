@@ -2,8 +2,8 @@
 /**
  * 数组助手类
  * @author : weiyi <294287600@qq.com>
- * Licensed ( http://www.wycto.com )
- * Copyright (c) 2016~2099 http://www.wycto.com All rights reserved.
+ * Licensed ( http://www.wycto.cn )
+ * Copyright (c) 2016~2099 http://www.wycto.cn All rights reserved.
  */
 namespace wycto\helper;
 
@@ -174,7 +174,7 @@ class HelperArray
     	if ($value_field) {
     		foreach ( $arr as $row ) {
     			if (isset ( $row [$key_field] )) {
-    				$ret [$row [$key_field]] = $row [$value_field];
+    				$ret [$row [$key_field]] = isset($row [$value_field])?$row [$value_field]:'NULL';
     			}
     		}
     	} else {

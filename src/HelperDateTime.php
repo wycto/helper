@@ -65,7 +65,7 @@ class HelperDateTime
      * @param int $timestamp
      * @return string
      */
-    static function round_time($timestamp) {
+    static function roundTime($timestamp) {
 
         $now = CURRENT_TIMESTAMP;
         $time = $timestamp - $now;

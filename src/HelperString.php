@@ -12,13 +12,13 @@ class HelperString
 
     /**
      * 字符串截取
-     * @param string $string
-     * @param int $length
-     * @param string $dot
-     * @param string $charset
+     * @param string $string 需要截取的字符串
+     * @param int $length 截取长度
+     * @param string $dot 超出长度代理字符串，默认...
+     * @param string $charset 字符编码，默认utf-8
      * @return string
      */
-    static function c($string, $length, $dot = '...', $charset = 'utf-8') {
+    static function str_cut($string, $length, $dot = '...', $charset = 'utf-8') {
 
         $string = str_replace('&nbsp;', ' ', strip_tags($string));
         $string = str_replace(array(
@@ -40,9 +40,9 @@ class HelperString
     /**
      * 获得唯一字符串
      *
-     * @return string
+     * @return string 返回字符串
      */
-    static function unique_id() {
+    static function uniqueStr() {
         srand((double) microtime() * 1000000);
         return md5(uniqid(rand()));
     }
@@ -63,7 +63,7 @@ class HelperString
      * @param  string $dot       超出显示字符
      * @return string            返回字符串
      */
-    static function cut_str($sourcestr, $cutlength, $dot = '...') {
+    static function cutStr($string, $cutlength, $dot = '...') {
         $returnstr = '';
         $i = 0;
         $n = 0;
@@ -102,7 +102,7 @@ class HelperString
      * @param unknown_type $numeric
      * @return string
      */
-    static function random($length, $numeric = 0) {
+    static function randStr($length, $numeric = 0) {
         PHP_VERSION < '4.2.0' ? mt_srand((double) microtime() * 1000000) : mt_srand();
         $seed = base_convert(md5(print_r($_SERVER, 1) . microtime()), 16, $numeric ? 10 : 35);
         $seed = $numeric ? (str_replace('0', '', $seed) . '012340567890') : ($seed . 'zZ' . strtoupper($seed));
@@ -117,7 +117,7 @@ class HelperString
     /**
      * 获取随机数
      */
-    static function random2($length) {
+    static function random($length) {
         $key = NULL;
         $pattern = "1234567890abcdefghijklmnopqrstuvwxyz";
         for ($i = 0; $i < $length; $i ++) {
