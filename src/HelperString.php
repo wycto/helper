@@ -18,7 +18,7 @@ class HelperString
      * @param string $charset 字符编码，默认utf-8
      * @return string
      */
-    static function str_cut($string, $length, $dot = '...', $charset = 'utf-8') {
+    static function strCut($string, $length, $dot = '...', $charset = 'utf-8') {
 
         $string = str_replace('&nbsp;', ' ', strip_tags($string));
         $string = str_replace(array(
@@ -52,7 +52,7 @@ class HelperString
      * @param  string $str 需要处理的字符串
      * @return string      处理后的字符串
      */
-    static function removenr($str) {
+    static function removeNr($str) {
         return preg_replace('/[\r\n]/', '', $str);
     }
 
@@ -63,7 +63,7 @@ class HelperString
      * @param  string $dot       超出显示字符
      * @return string            返回字符串
      */
-    static function cutStr($string, $cutlength, $dot = '...') {
+    static function cutStrUtf8($string, $cutlength, $dot = '...') {
         $returnstr = '';
         $i = 0;
         $n = 0;
